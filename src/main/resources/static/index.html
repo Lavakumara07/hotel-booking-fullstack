@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f6f5f0">
+	<meta name="description" content="Find your room, plan your stay, and book direct with Haven House.">
+	<title>Haven House | Find your stay</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<script src="auth.js" defer></script>
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<header class="site-header">
+		<a class="brand" href="#" aria-label="Haven House home">
+			<span class="brand-mark" aria-hidden="true">H</span>
+			<span>HAVEN HOUSE<span class="brand-subtitle">A STAY TO REMEMBER</span></span>
+		</a>
+		<nav class="main-nav" aria-label="Main navigation">
+			<a href="#rooms">Stay</a>
+			<a href="#my-bookings">My bookings</a>
+		</nav>
+		<a class="header-cta" href="#rooms">Find a room <span aria-hidden="true">↗</span></a>
+		<button class="auth-action" id="auth-action" type="button" data-open-auth>Log in</button>
+	</header>
+
+	<main>
+		<section class="hero" aria-labelledby="hero-title">
+			<div class="hero-image" role="img" aria-label="Sunlit boutique hotel room"></div>
+			<div class="hero-shade"></div>
+			<div class="hero-content">
+				<p class="eyebrow light-eyebrow"><span></span> YOUR CITY ESCAPE</p>
+				<h1 id="hero-title">A little more<br>room to <em>unwind.</em></h1>
+				<p class="hero-copy">Thoughtful spaces, warm hospitality, and time well spent. Your next favourite stay starts here.</p>
+				<a class="text-link light-link" href="#rooms">Explore our rooms <span aria-hidden="true">↓</span></a>
+			</div>
+			<div class="hero-note"><span class="note-line"></span> MADE FOR SLOW MORNINGS</div>
+		</section>
+
+		<section class="search-wrap" aria-label="Search room availability">
+			<form class="search-bar" id="search-form">
+				<label class="date-field">
+					<span class="field-label">CHECK IN</span>
+					<input type="date" id="search-check-in" name="checkInDate" required>
+				</label>
+				<span class="search-divider" aria-hidden="true"></span>
+				<label class="date-field">
+					<span class="field-label">CHECK OUT</span>
+					<input type="date" id="search-check-out" name="checkOutDate" required>
+				</label>
+				<button class="button button-dark search-button" type="submit">Search availability <span aria-hidden="true">→</span></button>
+			</form>
+		</section>
+
+		<section class="rooms-section section-shell" id="rooms">
+			<div class="section-heading">
+				<div>
+					<p class="eyebrow"><span></span> THE COLLECTION</p>
+					<h2>Find your kind<br class="mobile-break"> of <em>comfortable.</em></h2>
+				</div>
+				<p class="section-intro">Each room is a quiet invitation to slow down, settle in, and feel right at home.</p>
+			</div>
+			<div class="results-bar">
+				<p id="room-results" aria-live="polite">Loading rooms…</p>
+				<button class="reset-search" id="reset-search" type="button" hidden>Show all rooms</button>
+			</div>
+			<div class="room-grid" id="room-grid" aria-live="polite"></div>
+			<div class="empty-state" id="rooms-empty" hidden>
+				<span class="empty-icon" aria-hidden="true">⌂</span>
+				<h3>No rooms found</h3>
+				<p id="rooms-empty-copy">Try another date range to discover your stay.</p>
+			</div>
+		</section>
+
+		<section class="stay-note">
+			<div class="stay-note-inner">
+				<p class="eyebrow light-eyebrow"><span></span> THE HAVEN HOUSE WAY</p>
+				<h2>Good stays are<br><em>felt, not rushed.</em></h2>
+				<p>Come for a night. Leave with a little more calm than you arrived with.</p>
+			</div>
+			<div class="stay-note-number" aria-hidden="true">01</div>
+		</section>
+
+		<section class="bookings-section section-shell" id="my-bookings">
+			<div class="section-heading bookings-heading">
+				<div>
+					<p class="eyebrow"><span></span> YOUR STAY, YOUR WAY</p>
+					<h2>Manage your <em>booking.</em></h2>
+				</div>
+				<p class="section-intro">Enter the email you used to book to view or cancel a reservation.</p>
+			</div>
+			<form class="lookup-form" id="lookup-form">
+				<label class="lookup-input">
+					<span class="field-label">EMAIL ADDRESS</span>
+					<input type="email" id="lookup-email" name="guestEmail" placeholder="you@example.com" autocomplete="email" required>
+				</label>
+				<button class="button button-outline" type="submit">Find my bookings <span aria-hidden="true">→</span></button>
+			</form>
+			<div class="booking-list" id="booking-list" aria-live="polite"></div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<a class="brand footer-brand" href="#" aria-label="Haven House home">
+			<span class="brand-mark" aria-hidden="true">H</span>
+			<span>HAVEN HOUSE<span class="brand-subtitle">A STAY TO REMEMBER</span></span>
+		</a>
+		<p>Thoughtful stays. Lasting memories.</p>
+		<a href="#hero-title" class="back-top">Back to top ↑</a>
+	</footer>
+
+	<dialog class="booking-dialog" id="booking-dialog" aria-labelledby="dialog-title">
+		<div class="dialog-top">
+			<div>
+				<p class="eyebrow"><span></span> MAKE IT YOURS</p>
+				<h2 id="dialog-title">Book your <em>stay.</em></h2>
+			</div>
+			<button class="icon-button" id="close-dialog" type="button" aria-label="Close booking form">×</button>
+		</div>
+		<p class="dialog-room" id="dialog-room"></p>
+		<form id="booking-form">
+			<input type="hidden" id="booking-room-id" name="roomId">
+			<div class="form-grid">
+				<label class="form-field form-full">
+					<span class="field-label">FULL NAME</span>
+					<input type="text" name="guestName" autocomplete="name" required maxlength="120">
+				</label>
+				<label class="form-field">
+					<span class="field-label">EMAIL ADDRESS</span>
+					<input type="email" name="guestEmail" autocomplete="email" required maxlength="160">
+				</label>
+				<label class="form-field">
+					<span class="field-label">PHONE NUMBER</span>
+					<input type="tel" name="guestPhone" autocomplete="tel" required maxlength="40">
+				</label>
+				<label class="form-field">
+					<span class="field-label">CHECK IN</span>
+					<input type="date" id="booking-check-in" name="checkInDate" required>
+				</label>
+				<label class="form-field">
+					<span class="field-label">CHECK OUT</span>
+					<input type="date" id="booking-check-out" name="checkOutDate" required>
+				</label>
+			</div>
+			<p class="form-error" id="booking-error" role="alert" hidden></p>
+			<button class="button button-dark dialog-submit" type="submit">Continue to payment <span aria-hidden="true">→</span></button>
+			<p class="fine-print">Your room is reserved after successful payment.</p>
+		</form>
+	</dialog>
+
+	<dialog class="booking-dialog payment-dialog" id="payment-dialog" aria-labelledby="payment-title">
+		<div class="dialog-top">
+			<div>
+				<p class="eyebrow"><span></span> SECURE CHECKOUT</p>
+				<h2 id="payment-title">Complete your <em>stay.</em></h2>
+			</div>
+			<button class="icon-button" id="close-payment" type="button" aria-label="Close payment checkout">×</button>
+		</div>
+		<p class="dialog-room" id="payment-room"></p>
+		<div class="payment-breakdown">
+			<div><span>Room subtotal</span><strong id="payment-subtotal">₹0</strong></div>
+			<div><span>GST (<span id="payment-gst-rate">0</span>%)</span><strong id="payment-gst">₹0</strong></div>
+			<div class="payment-total-row"><span>Total payable</span><strong id="payment-total">₹0</strong></div>
+		</div>
+		<p class="payment-error" id="payment-error" role="alert" hidden></p>
+		<button class="button button-dark dialog-submit" id="pay-now" type="button" disabled>Preparing checkout…</button>
+		<p class="fine-print" id="payment-note">Your booking is confirmed after payment verification.</p>
+	</dialog>
+
+	<div class="toast" id="toast" role="status" aria-live="polite"></div>
+	<dialog class="booking-dialog auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+		<div class="dialog-top">
+			<div>
+				<p class="eyebrow"><span></span> WELCOME TO HAVEN HOUSE</p>
+				<h2 id="auth-title">Your stay, <em>your way.</em></h2>
+			</div>
+			<button class="icon-button" id="auth-close" type="button" aria-label="Close sign in">×</button>
+		</div>
+		<div class="auth-tabs" role="tablist" aria-label="Account options">
+			<button class="auth-tab active" type="button" data-auth-mode="login" role="tab" aria-selected="true">Log in</button>
+			<button class="auth-tab" type="button" data-auth-mode="register" role="tab" aria-selected="false">Create account</button>
+		</div>
+		<form id="login-form" class="auth-form">
+			<label class="form-field">
+				<span class="field-label">EMAIL ADDRESS</span>
+				<input type="email" name="email" autocomplete="email" required>
+			</label>
+			<label class="form-field">
+				<span class="field-label">PASSWORD</span>
+				<input type="password" name="password" autocomplete="current-password" required>
+			</label>
+			<button class="button button-dark dialog-submit" type="submit">Log in <span aria-hidden="true">→</span></button>
+		</form>
+		<form id="register-form" class="auth-form" hidden>
+			<label class="form-field">
+				<span class="field-label">FULL NAME</span>
+				<input type="text" name="fullName" autocomplete="name" maxlength="120" required>
+			</label>
+			<label class="form-field">
+				<span class="field-label">EMAIL ADDRESS</span>
+				<input type="email" name="email" autocomplete="email" maxlength="254" required>
+			</label>
+			<label class="form-field">
+				<span class="field-label">PASSWORD (8–72 CHARACTERS)</span>
+				<input type="password" name="password" autocomplete="new-password" minlength="8" maxlength="72" required>
+			</label>
+			<button class="button button-dark dialog-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
+		</form>
+		<p class="form-error" id="auth-error" role="alert" hidden></p>
+	</dialog>
+</body>
+</html>
