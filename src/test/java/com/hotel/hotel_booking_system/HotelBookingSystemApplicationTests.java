@@ -127,7 +127,6 @@ class HotelBookingSystemApplicationTests {
 				.andReturn();
 		return jsonString(result, "$.token");
 	}
-
 	private String register(String email) throws Exception {
 		MvcResult result = mockMvc.perform(post("/api/auth/register")
 						.contentType(MediaType.APPLICATION_JSON)
